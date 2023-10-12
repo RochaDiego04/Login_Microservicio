@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { PeticionesService } from 'src/app/services/peticiones.service';
 import { Login } from 'src/app/models/login.model';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent {
     contrasenia: ['', [Validators.required]]
   })
 
-  constructor(private peticionesService: PeticionesService, private fb: FormBuilder){ // Inyeccion de dependencias
+  constructor(private peticionesService: PeticionesService, private fb: FormBuilder, private router: Router){ // Inyeccion de dependencias
     this.mostrarProductos = false;
   }
 
@@ -42,7 +43,7 @@ export class LoginComponent {
     });
   }
 
-  public btnMostrar_Click(){
+  public btn_ValidarUsuario(){
 
     let usuario = new Login();
     usuario.usuario = this.loginForm.get('usuario')!.value ?? ""; // ! para indicar que no puede ser null
@@ -57,6 +58,7 @@ export class LoginComponent {
           //Convertir usuario a cadena (JSON)
           let usuarioStr = JSON.stringify(dato.datos as Login);
           localStorage.setItem("usuario", usuarioStr);
+          this.router.navigate(['/productos']); //Navigate to home page
           console.log("datos de respuesta: ", (dato.datos as Login));
         }
         else {
@@ -65,10 +67,6 @@ export class LoginComponent {
       },
       error: (error) => {}
     });
-  }
-
-  public eventoRecepcionDato(valorRecepcion: string){
-    alert("Valor recibido: "+ valorRecepcion);
   }
 
   public eventoOcultarHijo(mostrar: boolean){

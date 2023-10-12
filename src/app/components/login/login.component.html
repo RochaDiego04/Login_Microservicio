@@ -1,7 +1,7 @@
 <div class="container">
     <h1>Componente LOGIN</h1>
 
-    <form [formGroup]="loginForm">
+    <form [formGroup]="loginForm" (ngSubmit)="btn_ValidarUsuario()">
         <p-card header="Login" class="login-card ">
             <div class="field">
                 <label for="text">Usuario</label>
@@ -29,10 +29,7 @@
                     <div *ngIf="contrasenia.errors?.['required']">Contraseña es obligatoria</div>
                 </small>
             </div> 
-            <!-- <p-button label="Registrarse" styleClass="w-full" [disabled]="loginForm.invalid"></p-button> -->
-    
-            <!-- <button class="btn btn-primary" (click)="btnMostrar_Click();">Enviar dato</button> -->
-            <p-button type="submit" label="Mostrar" styleClass="w-full" [disabled]="loginForm.invalid" (onClick)="btnMostrar_Click()"></p-button>
+            <p-button styleClass="w-full" type="submit" label="Ingresar" [disabled]="loginForm.invalid"></p-button>
         </p-card>
     </form>
 </div>
