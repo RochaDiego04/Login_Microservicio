@@ -1,37 +1,39 @@
 <div class="container">
-    <h1>Componente Padre</h1>
+    <h1>Componente LOGIN</h1>
 
-    <!--Usuario-->
-    <div class="row">
-        <div class="col-2">
-            <label class="label">Usuario</label>
-            <input type="text" class="form-control" [(ngModel)]="valor">
-            <button *ngIf="valor" (click)="valor=''">
-                Close
-            </button>
-        </div>
-        <div class="col-2"> <button class="btn btn-primary" (click)="btnMostrar_Click();">Enviar dato</button> </div>
-        <div class="col-2"> <button class="btn btn-primary" (click)="btnActualizar_Click();">Actualizar datos</button> </div>
-    </div>
-    <!--Contraseña-->
-    <div class="row">
-        <div class="col-2">
-            <label class="label">Contraseña</label>
-            <input type="password" class="form-control" [(ngModel)]="contrasenia">
-            <button *ngIf="contrasenia" (click)="contrasenia=''">
-                Close
-            </button>
-        </div>
-    </div>
-    <!--Petición GET-->
-    <div class="row">
-        <div class="col-2">
-            <label class="label">Enviar </label>
-            <input type="text" class="form-control" [(ngModel)]="valorGet">
-            <button *ngIf="contrasenia" (click)="contrasenia=''">
-                Close
-            </button>
-            <button (click)="peticionGet();">Petición GET</button>
-        </div>
-    </div>
+    <form [formGroup]="loginForm">
+        <p-card header="Login" class="login-card ">
+            <div class="field">
+                <label for="text">Usuario</label>
+                <input 
+                    type="text" 
+                    pInputText formControlName="usuario" 
+                    class="w-full" 
+                    name="usuario" 
+                    placeholder="Ingresa tu usuario"
+                />
+                <small *ngIf="usuario.invalid && (usuario.touched || usuario.dirty)" class="block p-error">
+                    <div *ngIf="usuario.errors?.['required']">Usuario es obligatorio</div>
+                </small>
+            </div>
+            <div class="field">
+                <label for="password">Contraseña</label>
+                <input 
+                    type="password" 
+                    pInputText formControlName="contrasenia" 
+                    class="w-full" 
+                    name="contrasenia" 
+                    placeholder="Ingresa tu contraseña"
+                />
+                <small *ngIf="contrasenia.invalid && (contrasenia.touched || contrasenia.dirty)" class="block p-error">
+                    <div *ngIf="contrasenia.errors?.['required']">Contraseña es obligatoria</div>
+                </small>
+            </div> 
+            <!-- <p-button label="Registrarse" styleClass="w-full" [disabled]="loginForm.invalid"></p-button> -->
+    
+            <!-- <button class="btn btn-primary" (click)="btnMostrar_Click();">Enviar dato</button> -->
+            <p-button type="submit" label="Mostrar" styleClass="w-full" [disabled]="loginForm.invalid" (onClick)="btnMostrar_Click()"></p-button>
+        </p-card>
+    </form>
 </div>
+

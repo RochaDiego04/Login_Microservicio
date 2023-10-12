@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PeticionesService } from 'src/app/services/peticiones.service';
 import { Login } from 'src/app/models/login.model';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,22 +9,23 @@ import { Login } from 'src/app/models/login.model';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  valorGet: string;
-  valor: string;
-  contrasenia: string;
   mostrarProductos: boolean;
+  
+  loginForm = this.fb.group({
+    usuario: ['', [Validators.required]],
+    contrasenia: ['', [Validators.required]]
+  })
 
-  constructor(private peticionesService: PeticionesService){
-    this.valorGet = "";
-    this.valor = ""; //Almacenar input que se ingrese en login
-    this.contrasenia = "";
+  constructor(private peticionesService: PeticionesService, private fb: FormBuilder){ // Inyeccion de dependencias
     this.mostrarProductos = false;
   }
 
   public btnActualizar_Click(){
     let usuario = new Login();
-    usuario.usuario = this.valor;
-    usuario.contrasenia = this.contrasenia;
+    usuario.usuario = this.loginForm.get('usuario')!.value ?? ""; // ! para indicar que no puede ser null
+    usuario.contrasenia = this.loginForm.get('contrasenia')!.value ?? ""; // ?? para asignar un valor "" vacío por defecto
+
+    
     this.peticionesService.CambiarContrasenia(usuario).subscribe({
       next:(dato) => {
         if(dato.ok) {
@@ -40,36 +42,11 @@ export class LoginComponent {
     });
   }
 
-  public peticionGet(){
-    //Obtener el usuario de local storage
-    let usuarioStr = localStorage.getItem("usuario");
-
-    if (usuarioStr){
-      //Convertir a objeto tipo Login
-      let usu = JSON.parse(usuarioStr) as Login ;
-      console.log("usuario recuperado: ", usu);
-    }
-
-    alert("Mi valor: " + usuarioStr);
-
-    this.peticionesService.GetDatos(this.valorGet).subscribe({
-      next:(dato) => {
-        if (dato.ok){
-          alert("Respuesta: " + dato.datos);
-        } 
-      },
-      error:(error)=>{
-        console.log("Error: "+error);
-      }
-    });
-    console.log("continua");
-  }
-
   public btnMostrar_Click(){
 
     let usuario = new Login();
-    usuario.usuario = this.valor;
-    usuario.contrasenia = this.contrasenia;
+    usuario.usuario = this.loginForm.get('usuario')!.value ?? ""; // ! para indicar que no puede ser null
+    usuario.contrasenia = this.loginForm.get('contrasenia')!.value ?? ""; // ?? para asignar un valor "" vacío por defecto
 
     this.peticionesService.ValidaUsuario(usuario).subscribe({
       next:(dato)=>{
@@ -96,6 +73,14 @@ export class LoginComponent {
 
   public eventoOcultarHijo(mostrar: boolean){
     this.mostrarProductos = mostrar;
+  }
+
+  get usuario() { // Hacer el html mas legible
+    return this.loginForm.controls['usuario'];
+  }
+
+  get contrasenia() { // Hacer el html mas legible
+    return this.loginForm.controls['contrasenia'];
   }
 }
 
