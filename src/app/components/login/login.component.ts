@@ -23,11 +23,11 @@ export class LoginComponent {
   public btnActualizar_Click(){
     let usuario = new Login();
     usuario.usuario = this.valor;
-    usuario.contraseña = this.contrasenia;
+    usuario.contrasenia = this.contrasenia;
     this.peticionesService.CambiarContrasenia(usuario).subscribe({
       next:(dato) => {
         if(dato.ok) {
-          alert("La contraseña se cambió a: "+ (dato.datos as Login).contraseña);
+          alert("La contraseña se cambió a: "+ (dato.datos as Login).contrasenia);
         }
         else {
           alert(dato.mensaje);
@@ -69,7 +69,7 @@ export class LoginComponent {
 
     let usuario = new Login();
     usuario.usuario = this.valor;
-    usuario.contraseña = this.contrasenia;
+    usuario.contrasenia = this.contrasenia;
 
     this.peticionesService.ValidaUsuario(usuario).subscribe({
       next:(dato)=>{

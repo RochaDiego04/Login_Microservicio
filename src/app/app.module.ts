@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { AutInterceptor } from './services/aut.interceptor';
 import { LoginComponent } from './components/login/login.component';
 import { ProductosComponent } from './components/productos/productos.component';
+import { FormsModule } from '@angular/forms';
 
 //Angular material
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
@@ -25,7 +26,8 @@ import { ComunicacionComponent } from './components/comunicacion/comunicacion.co
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     provideAnimations(),
