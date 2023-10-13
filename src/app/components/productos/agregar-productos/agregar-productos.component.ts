@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { PeticionesService } from 'src/app/services/peticiones.service';
+import { Producto } from 'src/app/models/producto.model';
 
 @Component({
   selector: 'app-agregar-productos',
@@ -10,15 +12,16 @@ export class AgregarProductosComponent {
 
   @Input() mostrarAgregarProducto: boolean = true;
   @Output() clickCerrar: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() clickAgregar: EventEmitter<Producto> = new EventEmitter<Producto>();
 
   formProductos = this.fb.group({ // Creacion de reactiveForm
-    id: ["", Validators.required], 
+    id: [0, Validators.required], 
     nombre: ["", Validators.required],
     cantidad: [0, Validators.required], 
     precio: [0, Validators.required]
   });
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private peticionesService: PeticionesService) {
 
   }
 
@@ -26,7 +29,32 @@ export class AgregarProductosComponent {
     this.clickCerrar.emit(true);
   }
 
-  agregarProducto() {
-    console.log(this.formProductos);
+  public btn_AgregarProducto(){
+
+    let producto = new Producto(
+      this.formProductos.get('id')!.value ?? 0, 
+      this.formProductos.get('nombre')!.value ?? "",
+      this.formProductos.get('cantidad')!.value ?? 0,
+      this.formProductos.get('precio')!.value ?? 0
+    );
+
+    this.peticionesService.PostProducto(producto).subscribe({
+      next:(dato)=>{
+        if(dato.ok){
+          alert("Producto agregado");
+          console.log("datos de respuesta: ", (dato.datos as Producto));
+          // Emitir evento con el producto como argumento para enviarlo al padre
+          this.clickAgregar.emit(dato.datos as Producto);
+          this.formProductos.reset();
+          this.clickCerrar.emit(true);
+        }
+        else {
+          alert(dato.mensaje);
+        }
+      },
+      error: (error) => {}
+    });
   }
+
+
 }

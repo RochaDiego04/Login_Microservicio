@@ -47,7 +47,7 @@ import { InputNumber, InputNumberModule } from 'primeng/inputnumber';
     ButtonModule,
     TableModule,
     DialogModule,
-    InputNumberModule
+    InputNumberModule,
   ],
   providers: [
     provideAnimations(),

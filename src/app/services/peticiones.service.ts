@@ -15,9 +15,13 @@ export class PeticionesService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public GetProductos(pagina:number):Observable<ResponseModel>{
+  public GetProductos(pagina: number):Observable<ResponseModel>{
     let direccion = this.Url + "productos?page=" + pagina;
     return this.httpClient.get<ResponseModel>(direccion);
+  }
+
+  public PostProducto(datosPost: any) {
+    return this.httpClient.post<ResponseModel>(this.Url+"PeticionProductoPost", datosPost);
   }
 
   public ValidaUsuario(usuario: Login){
