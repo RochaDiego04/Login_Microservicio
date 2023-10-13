@@ -1,0 +1,50 @@
+<p-dialog
+  header="Header"
+  [(visible)]="mostrarAgregarProducto"
+  [style]="{ width: '50vw' }"
+  (onHide)="cerrarAgregarProducto()"
+>
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold">Agregar Productos</span>
+  </ng-template>
+
+  <form [formGroup]="formProductos">
+    <div class="field">
+        <label for="block">Id</label>
+        <p-inputNumber inputId="integeronly" formControlName="id"> </p-inputNumber>
+        <small class="p-error block" *ngIf="formProductos.controls['id'].invalid && formProductos.controls['id'].dirty">Id es obligatorio</small>
+    </div>
+    <div class="field">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" pInputText formControlName="nombre" />
+        <small class="p-error block" *ngIf="formProductos.controls['nombre'].invalid && formProductos.controls['nombre'].dirty">Nombre es obligatorio</small>
+    </div>
+    <div class="field">
+        <label for="cantidad">Cantidad</label>
+        <p-inputNumber id="cantidad" inputId="integeronly" formControlName="cantidad"> </p-inputNumber>
+        <small class="p-error block" *ngIf="formProductos.controls['cantidad'].invalid && formProductos.controls['cantidad'].dirty">Cantidad es obligatoria</small>
+    </div>
+    <div class="field">
+        <label for="precio">Precio</label>
+        <p-inputNumber id="precio" inputId="currency-us" mode="currency" currency="USD" locale="en-US" formControlName="precio"> </p-inputNumber>
+        <small class="p-error block" *ngIf="formProductos.controls['precio'].invalid && formProductos.controls['precio'].dirty">Precio es obligatorio</small>
+    </div>
+  </form>
+
+  
+  <ng-template pTemplate="footer">
+    <p-button
+      (click)="cerrarAgregarProducto()"
+      label="Cancelar"
+      styleClass="p-button-text mr-5"
+    >
+    </p-button>
+
+    <p-button
+      (click)="agregarProducto()"
+      label="Agregar"
+      [disabled]="formProductos.invalid"
+    >
+    </p-button>
+  </ng-template>
+</p-dialog>

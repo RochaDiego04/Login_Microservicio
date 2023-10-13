@@ -11,6 +11,8 @@ import { LoginComponent } from './components/login/login.component';
 import { AppComponent } from './app.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { ComunicacionComponent } from './components/comunicacion/comunicacion.component';
+import { EditarProductosComponent } from './components/productos/editar-productos/editar-productos.component';
+import { AgregarProductosComponent } from './components/productos/agregar-productos/agregar-productos.component';
 //Angular material
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,13 +21,19 @@ import { MatTableModule } from '@angular/material/table';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { InputNumber, InputNumberModule } from 'primeng/inputnumber';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ProductosComponent,
-    ComunicacionComponent
+    ComunicacionComponent,
+    EditarProductosComponent,
+    AgregarProductosComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +44,10 @@ import { ButtonModule } from 'primeng/button';
     CardModule,
     InputTextModule,
     ReactiveFormsModule,
-    ButtonModule
+    ButtonModule,
+    TableModule,
+    DialogModule,
+    InputNumberModule
   ],
   providers: [
     provideAnimations(),

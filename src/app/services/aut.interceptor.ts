@@ -15,7 +15,7 @@ export class AutInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let req = request;
     console.log("petición interceptor: ", request);
-    debugger;
+    // debugger;
     req = request.clone ({
       body: request.body,
       setHeaders: {

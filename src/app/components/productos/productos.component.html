@@ -1,1 +1,33 @@
-<p>productos works!</p>
+
+
+<div class="flex justify-content-between">
+  <p-button label="Add Product" (onClick)="mostrarComponenteAgregarProducto()"></p-button>
+  <p-button styleClass=""  label="LogOut" (onClick)="logOut()"></p-button>
+</div>
+
+<p-table [value]="productos" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="3">
+  <ng-template pTemplate="header">
+      <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-producto>
+      <tr>
+          <td>{{ producto.id }}</td>
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.cantidad }}</td>
+          <td>{{ producto.precio }}</td>
+      </tr>
+  </ng-template>
+</p-table>
+
+<app-agregar-productos 
+    [mostrarAgregarProducto] = "mostrarAgregarProducto"
+    (clickCerrar)="ocultarAgregarProducto($event)">
+</app-agregar-productos>
+
+
+

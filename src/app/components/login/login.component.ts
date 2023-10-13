@@ -51,6 +51,7 @@ export class LoginComponent {
 
     this.peticionesService.ValidaUsuario(usuario).subscribe({
       next:(dato)=>{
+        console.log(dato);
         if(dato.ok){
           debugger;
           alert("usuario válido");
@@ -67,10 +68,6 @@ export class LoginComponent {
       },
       error: (error) => {}
     });
-  }
-
-  public eventoOcultarHijo(mostrar: boolean){
-    this.mostrarProductos = mostrar;
   }
 
   get usuario() { // Hacer el html mas legible

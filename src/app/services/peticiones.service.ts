@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ResponseModel } from '../models/response.model';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Login } from '../models/login.model';
+import { Producto } from '../models/producto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,9 @@ export class PeticionesService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public GetDatos(valor: string){
-    //return this.httpClient.get<ResponseModel>(this.Url+"PeticionGet/"+ valor).pipe(map(data=>data));
-    return this.httpClient.get<ResponseModel>(this.Url+"PeticionGet/"+ valor);
+  public GetProductos(pagina:number):Observable<ResponseModel>{
+    let direccion = this.Url + "productos?page=" + pagina;
+    return this.httpClient.get<ResponseModel>(direccion);
   }
 
   public ValidaUsuario(usuario: Login){
