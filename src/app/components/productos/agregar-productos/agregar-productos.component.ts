@@ -10,6 +10,7 @@ import { Producto } from 'src/app/models/producto.model';
 })
 export class AgregarProductosComponent implements OnInit  {
 
+  @Input() productos: Producto[] = [];
   @Input() mostrarAgregarProducto: boolean = true;
   @Output() clickCerrar: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() clickAgregar: EventEmitter<Producto> = new EventEmitter<Producto>();
@@ -41,6 +42,14 @@ export class AgregarProductosComponent implements OnInit  {
       this.formProductos.get('cantidad')!.value ?? 0,
       this.formProductos.get('precio')!.value ?? 0
     );
+
+    console.log(this.productos);
+
+    // Validar existencia de id
+    if (this.productos.some(p => p.id === producto.id)) {
+      alert("El ID del producto ya existe.");
+      return;
+    }
 
     this.peticionesService.PostProducto(producto).subscribe({
       next:(dato)=>{
