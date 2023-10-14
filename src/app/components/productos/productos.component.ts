@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { Login } from 'src/app/models/login.model';
 import { Producto } from 'src/app/models/producto.model';
 import { PeticionesService } from 'src/app/services/peticiones.service';
-import { Table } from 'primeng/table'; 
 
 @Component({
   selector: 'app-productos',
@@ -17,8 +17,12 @@ export class ProductosComponent implements OnInit  {
   productos: Producto[];
   mostrarAgregarProducto = false;
 
-  constructor(private peticionesService: PeticionesService, private http: HttpClient , private router: Router){
-    this.productos = []
+  constructor(
+    private peticionesService: PeticionesService,
+    private http: HttpClient,
+    private router: Router,
+    private confirmationService: ConfirmationService){
+      this.productos = []
   }
 
   ngOnInit() {
@@ -56,6 +60,29 @@ export class ProductosComponent implements OnInit  {
     console.log(this.productos);
   }
 
-  
+  editarProducto(producto: Producto) {
+    
+  }
+
+  eliminarProducto(producto: Producto) {
+    this.confirmationService.confirm({
+      message: 'Seguro quiere eliminar este producto?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        // Llamar al método deleteProducto del servicio ProductoService
+        this.peticionesService.eliminarProducto(producto.id).subscribe(respuesta => {
+          if (respuesta.ok) {
+            // Buscar el producto eliminado por su id en el arreglo de productos
+            const index = this.productos.findIndex(p => p.id == producto.id);
+            this.productos.splice(index, 1);
+            alert("El producto ha sido eliminado correctamente");
+          }
+          else {
+            alert(respuesta.mensaje);
+          }
+        });
+      }
+    });
+  }
 
 }

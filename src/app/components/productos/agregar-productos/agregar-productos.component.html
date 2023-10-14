@@ -11,40 +11,50 @@
   <form [formGroup]="formProductos">
     <div class="field">
         <label for="block">Id</label>
-        <p-inputNumber inputId="integeronly" formControlName="id"> </p-inputNumber>
+        <p-inputNumber inputId="integeronly" formControlName="id" placeholder="id (número)"> </p-inputNumber>
         <small class="p-error block" *ngIf="formProductos.controls['id'].invalid && formProductos.controls['id'].dirty">Id es obligatorio</small>
     </div>
     <div class="field">
         <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" pInputText formControlName="nombre" />
+        <input type="text" id="nombre" pInputText formControlName="nombre" placeholder="nombre (texto)"/>
         <small class="p-error block" *ngIf="formProductos.controls['nombre'].invalid && formProductos.controls['nombre'].dirty">Nombre es obligatorio</small>
     </div>
     <div class="field">
         <label for="cantidad">Cantidad</label>
-        <p-inputNumber id="cantidad" inputId="integeronly" formControlName="cantidad"> </p-inputNumber>
+        <p-inputNumber id="cantidad" inputId="integeronly" formControlName="cantidad" placeholder="cantidad (número)"> </p-inputNumber>
         <small class="p-error block" *ngIf="formProductos.controls['cantidad'].invalid && formProductos.controls['cantidad'].dirty">Cantidad es obligatoria</small>
     </div>
     <div class="field">
         <label for="precio">Precio</label>
-        <p-inputNumber id="precio" inputId="currency-us" mode="currency" currency="USD" locale="en-US" formControlName="precio"> </p-inputNumber>
+        <p-inputNumber id="precio" inputId="currency-us" mode="currency" currency="USD" locale="en-US" formControlName="precio" placeholder="precio (número)"> </p-inputNumber>
         <small class="p-error block" *ngIf="formProductos.controls['precio'].invalid && formProductos.controls['precio'].dirty">Precio es obligatorio</small>
     </div>
   </form>
 
   
-  <ng-template pTemplate="footer">
-    <p-button
-      (click)="cerrarAgregarProducto()"
-      label="Cancelar"
-      styleClass="p-button-text mr-5"
-    >
-    </p-button>
-
-    <p-button
-      (click)="btn_AgregarProducto()"
-      label="Agregar"
-      [disabled]="formProductos.invalid"
-    >
-    </p-button>
+  <ng-template pTemplate="footer" styleClass="botones">
+    <div class="flex justify-content-between">
+      <p-button
+        (click)="cerrarAgregarProducto()"
+        label="Cancelar"
+        styleClass="mr-5"
+      >
+      </p-button>
+  
+      <p-button
+        (click)="btn_limpiarFormulario()"
+        label="Limpiar"
+        styleClass="p-button-text mr-5"
+      >
+      </p-button>
+  
+      <p-button
+        (click)="btn_AgregarProducto()"
+        label="Agregar"
+        [disabled]="formProductos.invalid"
+        styleClass="mr-5"
+      >
+      </p-button>
+    </div>
   </ng-template>
 </p-dialog>

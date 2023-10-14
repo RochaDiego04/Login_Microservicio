@@ -24,6 +24,9 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumber, InputNumberModule } from 'primeng/inputnumber';
+import { MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 
 @NgModule({
@@ -48,6 +51,7 @@ import { InputNumber, InputNumberModule } from 'primeng/inputnumber';
     TableModule,
     DialogModule,
     InputNumberModule,
+    ConfirmDialogModule
   ],
   providers: [
     provideAnimations(),
@@ -55,7 +59,9 @@ import { InputNumber, InputNumberModule } from 'primeng/inputnumber';
       provide: HTTP_INTERCEPTORS,
       useClass: AutInterceptor,
       multi: true
-    }
+    },
+    MessageService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

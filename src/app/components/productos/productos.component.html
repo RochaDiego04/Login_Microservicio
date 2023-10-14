@@ -1,17 +1,16 @@
-
-
-<div class="flex justify-content-between">
-  <p-button label="Add Product" (onClick)="mostrarComponenteAgregarProducto()"></p-button>
+<div class="flex justify-content-end">
   <p-button styleClass=""  label="LogOut" (onClick)="logOut()"></p-button>
 </div>
 
-<p-table [value]="productos" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="3">
+<p-table [value]="productos" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="4">
   <ng-template pTemplate="header">
       <tr>
           <th>Id</th>
           <th>Nombre</th>
           <th>Cantidad</th>
           <th>Precio</th>
+          <th></th>
+          <th></th>
       </tr>
   </ng-template>
   <ng-template pTemplate="body" let-producto>
@@ -20,15 +19,37 @@
           <td>{{ producto.nombre }}</td>
           <td>{{ producto.cantidad }}</td>
           <td>{{ producto.precio }}</td>
+          <td>
+            <button
+                pButton
+                icon="pi pi-pencil"
+                class="p-button-success mr-2"
+                (click)="editarProducto(producto)">
+            </button>
+          </td>
+          <td>
+            <button
+                pButton
+                icon="pi pi-trash"
+                class="p-button-danger mr-2"
+                (click)="eliminarProducto(producto)">
+            </button>
+          </td>
       </tr>
   </ng-template>
 </p-table>
 
+<div class="flex justify-content-center">
+    <p-button label="Add Product" (onClick)="mostrarComponenteAgregarProducto()"></p-button>
+</div>
+
 <app-agregar-productos 
     [mostrarAgregarProducto] = "mostrarAgregarProducto"
     (clickCerrar)="ocultarAgregarProducto($event)"
-    (clickAgregar)="agregarProductoALista($event)">
+    (clickAgregar)="agregarProductoALista($event)"
+    >
 </app-agregar-productos>
 
+<p-confirmDialog header="Eliminar" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 
 

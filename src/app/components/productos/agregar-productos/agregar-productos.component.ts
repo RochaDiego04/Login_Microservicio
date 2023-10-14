@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { PeticionesService } from 'src/app/services/peticiones.service';
 import { Producto } from 'src/app/models/producto.model';
@@ -8,7 +8,7 @@ import { Producto } from 'src/app/models/producto.model';
   templateUrl: './agregar-productos.component.html',
   styleUrls: ['./agregar-productos.component.css']
 })
-export class AgregarProductosComponent {
+export class AgregarProductosComponent implements OnInit  {
 
   @Input() mostrarAgregarProducto: boolean = true;
   @Output() clickCerrar: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -20,6 +20,10 @@ export class AgregarProductosComponent {
     cantidad: [0, Validators.required], 
     precio: [0, Validators.required]
   });
+
+  ngOnInit(): void {
+    this.btn_limpiarFormulario();
+  }
 
   constructor(private fb: FormBuilder, private peticionesService: PeticionesService) {
 
@@ -56,5 +60,8 @@ export class AgregarProductosComponent {
     });
   }
 
+  public btn_limpiarFormulario() {
+    this.formProductos.reset();
+  }
 
 }

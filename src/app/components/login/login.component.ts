@@ -3,6 +3,8 @@ import { PeticionesService } from 'src/app/services/peticiones.service';
 import { Login } from 'src/app/models/login.model';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EventosService } from 'src/app/services/eventos.service';
+import { Mensaje } from 'src/app/models/mensaje.model';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,11 @@ export class LoginComponent {
     contrasenia: ['', [Validators.required]]
   })
 
-  constructor(private peticionesService: PeticionesService, private fb: FormBuilder, private router: Router){ // Inyeccion de dependencias
+  constructor(
+      private peticionesService: PeticionesService, 
+      private fb: FormBuilder, 
+      private router: Router,
+      private eventoService: EventosService){ // Inyeccion de dependencias
     this.mostrarProductos = false;
   }
 
@@ -26,7 +32,6 @@ export class LoginComponent {
     usuario.usuario = this.loginForm.get('usuario')!.value ?? ""; // ! para indicar que no puede ser null
     usuario.contrasenia = this.loginForm.get('contrasenia')!.value ?? ""; // ?? para asignar un valor "" vacío por defecto
 
-    
     this.peticionesService.CambiarContrasenia(usuario).subscribe({
       next:(dato) => {
         if(dato.ok) {
@@ -49,11 +54,14 @@ export class LoginComponent {
     usuario.usuario = this.loginForm.get('usuario')!.value ?? ""; // ! para indicar que no puede ser null
     usuario.contrasenia = this.loginForm.get('contrasenia')!.value ?? ""; // ?? para asignar un valor "" vacío por defecto
 
+    let mensaje = new Mensaje();
+
     this.peticionesService.ValidaUsuario(usuario).subscribe({
       next:(dato)=>{
         console.log(dato);
         if(dato.ok){
           debugger;
+
           alert("usuario válido");
           this.mostrarProductos = true;
           //Convertir usuario a cadena (JSON)
