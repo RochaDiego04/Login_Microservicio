@@ -24,7 +24,7 @@
                 pButton
                 icon="pi pi-pencil"
                 class="p-button-success mr-2"
-                (click)="editarProducto(producto)">
+                (click)="mostrarComponenteEditarProducto(producto)">
             </button>
           </td>
           <td>
@@ -50,6 +50,15 @@
     [productos]="productos"
     >
 </app-agregar-productos>
+
+<app-editar-productos 
+    [mostrarEditarProducto] = "mostrarEditarProducto"
+    (clickCerrar)="ocultarEditarProducto($event)"
+    (clickEditar)="editarProductoDeLista($event)"
+    [productoSeleccionado]="productoSeleccionado"
+    [productos]="productos"
+    >
+</app-editar-productos>
 
 <p-confirmDialog header="Eliminar" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 

@@ -33,10 +33,13 @@ export class PeticionesService {
   }
 
   public eliminarProducto(idProducto: number): Observable<ResponseModel> {
-    // La URL completa de la petición DELETE
     const url = `${this.Url}PeticionDelete?idProducto=${idProducto}`;
-    // Hacer la petición y retornar el observable
     return this.httpClient.delete<ResponseModel>(url);
   }
+  
+  public PutProducto(producto: Producto): Observable<ResponseModel> {
+    return this.httpClient.put<ResponseModel>(this.Url+"PeticionProductoPut", producto);
+  }
+  
   
 }

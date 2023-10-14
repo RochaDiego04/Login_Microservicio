@@ -43,8 +43,6 @@ export class AgregarProductosComponent implements OnInit  {
       this.formProductos.get('precio')!.value ?? 0
     );
 
-    console.log(this.productos);
-
     // Validar existencia de id
     if (this.productos.some(p => p.id === producto.id)) {
       alert("El ID del producto ya existe.");

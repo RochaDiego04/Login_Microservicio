@@ -16,6 +16,8 @@ export class ProductosComponent implements OnInit  {
 
   productos: Producto[];
   mostrarAgregarProducto = false;
+  mostrarEditarProducto = false;
+  productoSeleccionado: any = null;
 
   constructor(
     private peticionesService: PeticionesService,
@@ -60,9 +62,25 @@ export class ProductosComponent implements OnInit  {
     console.log(this.productos);
   }
 
-  editarProducto(producto: Producto) {
-    
+  mostrarComponenteEditarProducto(producto: Producto) {
+    this.mostrarEditarProducto = true;
+    this.productoSeleccionado = producto;
   }
+
+  ocultarEditarProducto(estaCerrada: boolean){
+    this.mostrarEditarProducto = !estaCerrada;
+  }
+
+  editarProductoDeLista(producto: Producto) {
+    // Encuentra el índice del producto en la lista de productos
+    const index = this.productos.findIndex(p => p.id === producto.id);
+    
+    // Verificar que exista el producto
+    if (index !== -1) {
+      this.productos[index] = producto;
+    }
+  }
+  
 
   eliminarProducto(producto: Producto) {
     this.confirmationService.confirm({
